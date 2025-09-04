@@ -2,7 +2,8 @@
 
 **SpeedWing** is a fun, fictional website presenting a courier service that delivers packages with the help of trained pigeons. The project is a single-page static site (see `index.html`) that showcases company services, pricing, and coverage, all in a playful, modern style.
 
-![Website Preview](img.png)
+![Website Preview 1](img1.png)
+![Website Preview 2](img2.png)
 
 ## About
 
