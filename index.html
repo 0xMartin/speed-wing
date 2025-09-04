@@ -11,722 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-    <style>
-        :root {
-            --primary: #3a5798;
-            --secondary: #566ea1;
-            --accent: #ff6b35;
-            --light: #f5f7fa;
-            --dark: #2c3e50;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Open Sans', sans-serif;
-            color: var(--dark);
-            line-height: 1.6;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        /* Header */
-        header {
-            background-color: var(--primary);
-            padding: 20px 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 50px;
-            margin-right: 10px;
-        }
-
-        .logo h1 {
-            color: white;
-            font-size: 24px;
-        }
-
-        .logo span {
-            color: var(--accent);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin-left: 30px;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: var(--accent);
-        }
-
-        /* Hero Section */
-        .hero {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./img/hero.png');
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            color: white;
-            text-align: center;
-            margin-top: 90px;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h2 {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
-        .hero p {
-            font-size: 20px;
-            margin-bottom: 30px;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--accent);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #e55a2b;
-        }
-
-        /* Services */
-        .section {
-            padding: 80px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            font-size: 36px;
-            color: var(--primary);
-            position: relative;
-            display: inline-block;
-            padding-bottom: 15px;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 3px;
-            background-color: var(--accent);
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .service-card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .service-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .service-content {
-            padding: 20px;
-        }
-
-        .service-content h3 {
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        /* About */
-        .about {
-            background-color: var(--light);
-        }
-
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-        }
-
-        .about-image {
-            flex: 1;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .about-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .about-text {
-            flex: 1;
-        }
-
-        .about-text h3 {
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-
-        .about-text p {
-            margin-bottom: 15px;
-        }
-
-        .about-features {
-            margin-top: 20px;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .feature-icon {
-            width: 40px;
-            height: 40px;
-            background-color: var(--accent);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 15px;
-            color: white;
-            font-weight: bold;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .testimonials .section-title h2 {
-            color: white;
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .testimonial-card {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 30px;
-            position: relative;
-        }
-
-        .testimonial-card::before {
-            content: "" ";
- font-size: 80px;
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            opacity: 0.2;
-            font-family: serif;
-        }
-
-        .testimonial-text {
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-        }
-
-        .testimonial-author img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 15px;
-        }
-
-        .author-info h4 {
-            margin-bottom: 5px;
-        }
-
-        /* Pricing */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .pricing-card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-
-        .pricing-card:hover {
-            transform: scale(1.05);
-        }
-
-        .pricing-header {
-            background-color: var(--primary);
-            color: white;
-            padding: 20px 0;
-        }
-
-        .pricing-header h3 {
-            margin-bottom: 10px;
-        }
-
-        .price {
-            font-size: 36px;
-            font-weight: 700;
-        }
-
-        .price span {
-            font-size: 16px;
-            font-weight: normal;
-        }
-
-        .pricing-features {
-            padding: 20px;
-        }
-
-        .pricing-features ul {
-            list-style: none;
-            margin-bottom: 20px;
-        }
-
-        .pricing-features ul li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .pricing-features ul li:last-child {
-            border-bottom: none;
-        }
-
-        .ribbon {
-            position: absolute;
-            right: -5px;
-            top: -5px;
-            z-index: 1;
-            overflow: hidden;
-            width: 75px;
-            height: 75px;
-            text-align: right;
-        }
-
-        .ribbon span {
-            font-size: 12px;
-            font-weight: bold;
-            color: #FFF;
-            text-transform: uppercase;
-            text-align: center;
-            line-height: 20px;
-            transform: rotate(45deg);
-            width: 100px;
-            display: block;
-            background: #FF0000;
-            box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
-            position: absolute;
-            top: 19px;
-            right: -21px;
-        }
-
-        /* FAQ */
-        .faq {
-            background-color: var(--light);
-        }
-
-        .faq-item {
-            background-color: white;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-        }
-
-        .faq-question {
-            padding: 20px;
-            cursor: pointer;
-            position: relative;
-            font-weight: 600;
-        }
-
-        .faq-question::after {
-            content: '+';
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .faq-answer {
-            padding: 0 20px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-
-        .faq-answer-content {
-            padding-bottom: 20px;
-        }
-
-        .faq-item.active .faq-question::after {
-            content: '−';
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 500px;
-        }
-
-        /* Contact */
-        .contact-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .contact-info {
-            background-color: var(--primary);
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
-        }
-
-        .contact-info h3 {
-            margin-bottom: 20px;
-        }
-
-        .info-item {
-            display: flex;
-            margin-bottom: 15px;
-            align-items: flex-start;
-        }
-
-        .info-item i {
-            margin-right: 15px;
-            color: var(--accent);
-        }
-
-        .contact-form {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .contact-form h3 {
-            margin-bottom: 20px;
-            color: var(--primary);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-family: inherit;
-        }
-
-        textarea.form-control {
-            height: 120px;
-            resize: vertical;
-        }
-
-        button.btn {
-            border: none;
-            cursor: pointer;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 50px 0 20px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-column h3 {
-            color: var(--accent);
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column ul li a {
-            color: #ddd;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-column ul li a:hover {
-            color: var(--accent);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-links a {
-            display: block;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.3s;
-        }
-
-        .social-links a:hover {
-            background-color: var(--accent);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Media Queries */
-        @media (max-width: 768px) {
-            header {
-                padding: 15px 0;
-            }
-
-            .logo h1 {
-                font-size: 20px;
-            }
-
-            nav ul li {
-                margin-left: 15px;
-            }
-
-            .hero h2 {
-                font-size: 32px;
-            }
-
-            .hero p {
-                font-size: 16px;
-            }
-
-            .about-content {
-                flex-direction: column;
-            }
-
-            .section {
-                padding: 60px 0;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .logo img {
-                height: 40px;
-            }
-
-            .logo h1 {
-                font-size: 18px;
-            }
-
-            nav ul li {
-                margin-left: 10px;
-            }
-
-            nav ul li a {
-                font-size: 14px;
-            }
-
-            .hero h2 {
-                font-size: 28px;
-            }
-
-            .btn {
-                padding: 10px 20px;
-            }
-        }
-
-        .pigeon-team {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 40px 0;
-        }
-
-        .team-member {
-            text-align: center;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .team-member img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-bottom: 15px;
-            border: 5px solid var(--light);
-        }
-
-        .team-member h4 {
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .team-member p {
-            color: var(--secondary);
-            font-style: italic;
-        }
-
-        .contact-image {
-            border-radius: 20px;
-            opacity: 1.0;
-            width: 90%;
-            filter: saturate(0.4) hue-rotate(-40deg);
-            max-width: 600px;
-            display: block;
-            margin: 0 auto 20px;
-        }
-
-        #delivery-map { height: 420px; border-radius: 12px; margin: 0 auto 1em; }
-
-        .delivery-locations {
-            margin-top: 2em;
-            text-align: center;
-            font-size: 1.15em;
-            color: var(--primary);
-        }
-        .locations-list {
-            margin-top: 0.5em;
-            font-size: 1.15em;
-            font-family: 'Montserrat', sans-serif;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.7em;
-        }
-        .locations-list {
-            line-height: 2;
-            font-weight: 600;
-        }
-        .locations-list::after {
-            content: '';
-            display: block;
-            height: 0;
-            clear: both;
-        }
-        @media (max-width: 600px) {
-            .locations-list {
-                font-size: 1em;
-                gap: 0.4em;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -738,10 +23,14 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="#services">Služby</a></li>
-                    <li><a href="#about">O nás</a></li>
-                    <li><a href="#pricing">Ceník</a></li>
-                    <li><a href="#contact">Kontakt</a></li>
+                    <li><a href="#services" class="nav-services">Služby</a></li>
+                    <li><a href="#about" class="nav-about">O nás</a></li>
+                    <li><a href="#pricing" class="nav-pricing">Ceník</a></li>
+                    <li><a href="#contact" class="nav-contact">Kontakt</a></li>
+                    <li class="language-switcher">
+                        <button id="lang-cs" class="language-btn active">CZ</button>
+                        <button id="lang-en" class="language-btn">EN</button>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -749,46 +38,46 @@
 
     <section class="hero">
         <div class="container hero-content">
-            <h2>Nejrychlejší doručení zásilek vzdušnou cestou</h2>
-            <p>Tradiční hodnoty v moderním provedení. Rychlost, spolehlivost a ekologie v jednom křídle.</p>
-            <a href="#contact" class="btn">Objednat doručení</a>
+            <h2 class="hero-title">Nejrychlejší doručení zásilek vzdušnou cestou</h2>
+            <p class="hero-text">Tradiční hodnoty v moderním provedení. Rychlost, spolehlivost a ekologie v jednom křídle.</p>
+            <a href="#contact" class="btn hero-btn">Objednat doručení</a>
         </div>
     </section>
 
     <section id="services" class="section">
         <div class="container">
             <div class="section-title">
-                <h2>Naše služby</h2>
+                <h2 class="services-title">Naše služby</h2>
             </div>
             <div class="services-grid">
                 <div class="service-card">
                     <img src="./img/express-delivery.png" alt="Expresní doručení">
                     <div class="service-content">
-                        <h3>Expresní doručení</h3>
-                        <p>Garantované doručení do 4 hodin v okruhu 70 km. Žádné dopravní zácpy, žádná omezení.</p>
+                        <h3 class="service-title-1">Expresní doručení</h3>
+                        <p class="service-text-1">Garantované doručení do 4 hodin v okruhu 70 km. Žádné dopravní zácpy, žádná omezení.</p>
                     </div>
                 </div>
                 <div class="service-card">
                     <img src="./img/small-package.png" alt="Balíky do 100 g">
                     <div class="service-content">
-                        <h3>Balíky do 100 g</h3>
-                        <p>Speciálně vycvičení holubi zvládnou přepravit zásilky s drobnými předměty, dokumenty nebo USB
+                        <h3 class="service-title-2">Balíky do 100 g</h3>
+                        <p class="service-text-2">Speciálně vycvičení holubi zvládnou přepravit zásilky s drobnými předměty, dokumenty nebo USB
                             disky.</p>
                     </div>
                 </div>
                 <div class="service-card">
                     <img src="./img/personal-pigeon.png" alt="Osobní holub">
                     <div class="service-content">
-                        <h3>Osobní holub</h3>
-                        <p>Pronajměte si svého osobního doručovacího holuba, který bude k dispozici jen pro vaše
+                        <h3 class="service-title-3">Osobní holub</h3>
+                        <p class="service-text-3">Pronajměte si svého osobního doručovacího holuba, který bude k dispozici jen pro vaše
                             zásilky.</p>
                     </div>
                 </div>
                 <div class="service-card">
                     <img src="./img/heavy.png" alt="Extra těžký balík">
                     <div class="service-content">
-                        <h3>Extra těžký balík (1 kg)</h3>
-                        <p>Naše speciální jednotka "Těžká křídla" zvládne přepravu balíků až do 1 kg! K doručení
+                        <h3 class="service-title-4">Extra těžký balík (1 kg)</h3>
+                        <p class="service-text-4">Naše speciální jednotka "Těžká křídla" zvládne přepravu balíků až do 1 kg! K doručení
                             používáme vyšlechtěné holubí atlety.</p>
                     </div>
                 </div>
@@ -799,66 +88,66 @@
     <section id="about" class="section about">
         <div class="container">
             <div class="section-title">
-                <h2>Proč SpeedWing?</h2>
+                <h2 class="about-title">Proč SpeedWing?</h2>
             </div>
             <div class="about-content">
                 <div class="about-image">
                     <img src="./img/about.png" alt="O naší holubí poště">
                 </div>
                 <div class="about-text">
-                    <h3>Tradiční metoda s moderním přístupem</h3>
-                    <p>SpeedWing není jen obyčejná kurýrní služba. Jsme kombinace staletími prověřené metody komunikace
+                    <h3 class="about-heading">Tradiční metoda s moderním přístupem</h3>
+                    <p class="about-text-1">SpeedWing není jen obyčejná kurýrní služba. Jsme kombinace staletími prověřené metody komunikace
                         a nejnovějších technologií sledování a navigace.</p>
-                    <p>Naši holubi jsou vybaveni GPS moduly a mikroskopickými kamerami pro bezpečné doručení vašich
+                    <p class="about-text-2">Naši holubi jsou vybaveni GPS moduly a mikroskopickými kamerami pro bezpečné doručení vašich
                         zásilek na správné místo.</p>
                     <div class="about-features">
                         <div class="feature-item">
                             <div class="feature-icon">✓</div>
-                            <div>100% ekologická přeprava bez emisí</div>
+                            <div class="feature-1">100% ekologická přeprava bez emisí</div>
                         </div>
                         <div class="feature-item">
                             <div class="feature-icon">✓</div>
-                            <div>Žádné dopravní zácpy</div>
+                            <div class="feature-2">Žádné dopravní zácpy</div>
                         </div>
                         <div class="feature-item">
                             <div class="feature-icon">✓</div>
-                            <div>GPS sledování v reálném čase</div>
+                            <div class="feature-3">GPS sledování v reálném čase</div>
                         </div>
                         <div class="feature-item">
                             <div class="feature-icon">✓</div>
-                            <div>Doručení z místa na místo</div>
+                            <div class="feature-4">Doručení z místa na místo</div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="section-title" style="margin-top: 60px;">
-                <h2>Náš špičkový tým</h2>
+                <h2 class="team-title">Náš špičkový tým</h2>
             </div>
             <div class="pigeon-team">
                 <div class="team-member">
                     <img src="./img/speedy.png" alt="Speedy">
                     <h4>Speedy</h4>
-                    <p>Expresní doručovatel</p>
-                    <p>Rekordman v rychlosti doručení - 72 km/h</p>
+                    <p class="team-role-1">Expresní doručovatel</p>
+                    <p class="team-desc-1">Rekordman v rychlosti doručení - 72 km/h</p>
                 </div>
                 <div class="team-member">
                     <img src="./img/atlas.png" alt="Atlas">
                     <h4>Atlas</h4>
-                    <p>Specialista na těžké zásilky</p>
-                    <p>Zvládne doručit až 1 kg!</p>
+                    <p class="team-role-2">Specialista na těžké zásilky</p>
+                    <p class="team-desc-2">Zvládne doručit až 1 kg!</p>
                 </div>
                 <div class="team-member">
                     <img src="./img/navigator.png" alt="Navigator">
                     <h4>Navigator</h4>
-                    <p>GPS specialista</p>
-                    <p>Nikdy neztratil směr ani za bouře</p>
+                    <p class="team-role-3">GPS specialista</p>
+                    <p class="team-desc-3">Nikdy neztratil směr ani za bouře</p>
                 </div>
                 <div class="team-member">
                     <img src="./img/swift.png" alt="Swift">
                     <h4>Swift</h4>
-                    <p>Dlouhé trasy</p>
-                    <p>Rekord: 300 km bez přestávky</p>
+                    <p class="team-role-4">Dlouhé trasy</p>
+                    <p class="team-desc-4">Rekord: 300 km bez přestávky</p>
                 </div>
             </div>
         </div>
@@ -867,45 +156,45 @@
     <section class="section testimonials">
         <div class="container">
             <div class="section-title">
-                <h2>Co říkají naši klienti</h2>
+                <h2 class="testimonials-title">Co říkají naši klienti</h2>
             </div>
             <div class="testimonials-grid">
                 <div class="testimonial-card">
-                    <div class="testimonial-text">
+                    <div class="testimonial-text testimonial-text-1">
                         "Nechápal jsem, jak může holub doručit můj důležitý USB disk, ale SpeedWing mě přesvědčil!
                         Dorazil o 3 hodiny dříve než kurýr z konkurenční společnosti."
                     </div>
                     <div class="testimonial-author">
                         <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Jan Novák">
                         <div class="author-info">
-                            <h4>Jan Novák</h4>
-                            <p>IT manažer</p>
+                            <h4 class="testimonial-name-1">Jan Novák</h4>
+                            <p class="testimonial-position-1">IT manažer</p>
                         </div>
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="testimonial-text">
+                    <div class="testimonial-text testimonial-text-2">
                         "Potřebovala jsem urgentně doručit smlouvu přes celé město během dopravní špičky. SpeedWing to
                         zvládl za 20 minut!"
                     </div>
                     <div class="testimonial-author">
                         <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Petra Svobodová">
                         <div class="author-info">
-                            <h4>Petra Svobodová</h4>
-                            <p>Advokátka</p>
+                            <h4 class="testimonial-name-2">Petra Svobodová</h4>
+                            <p class="testimonial-position-2">Advokátka</p>
                         </div>
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="testimonial-text">
+                    <div class="testimonial-text testimonial-text-3">
                         "Jako ekologická firma jsme nadšení z bezemisní doručovací služby. A ještě k tomu mají holubi
                         roztomilé uniformy!"
                     </div>
                     <div class="testimonial-author">
                         <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Martin Zelený">
                         <div class="author-info">
-                            <h4>Martin Zelený</h4>
-                            <p>CEO, Green Solutions</p>
+                            <h4 class="testimonial-name-3">Martin Zelený</h4>
+                            <p class="testimonial-position-3">CEO, Green Solutions</p>
                         </div>
                     </div>
                 </div>
@@ -916,11 +205,11 @@
     <section id="mapa-doruceni" class="section">
         <div class="container">
             <div class="section-title">
-            <h2>Kde doručujeme</h2>
+            <h2 class="map-title">Kde doručujeme</h2>
             </div>
             <div id="delivery-map"></div>
             <div class="delivery-locations">
-                <strong>Doručujeme a vyzvedáváme v okruhu 70 km od těchto měst:</strong>
+                <strong class="delivery-locations-text">Doručujeme a vyzvedáváme v okruhu 70 km od těchto měst:</strong>
                 <div class="locations-list">
                 Praha &bull; Brno &bull; Ostrava &bull; Plzeň &bull; Ústí nad Labem &bull; Liberec &bull; Hradec Králové &bull; Pardubice &bull; Jihlava &bull; Olomouc &bull; Zlín &bull; Karlovy Vary &bull; České Budějovice
                 </div>
@@ -931,72 +220,72 @@
     <section id="pricing" class="section">
         <div class="container">
             <div class="section-title">
-                <h2>Ceník služeb</h2>
+                <h2 class="pricing-title">Ceník služeb</h2>
             </div>
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <div class="pricing-header">
-                        <h3>Základní</h3>
-                        <div class="price">199 Kč <span>/ zásilka</span></div>
+                        <h3 class="pricing-plan-1">Základní</h3>
+                        <div class="price"><span class="pricing-amount-1">199 Kč</span> <span class="pricing-period-1">/ zásilka</span></div>
                     </div>
                     <div class="pricing-features">
                         <ul>
-                            <li>Zásilky do 70 g</li>
-                            <li>Doručení do 7 hodin</li>
-                            <li>Sledování zásilky</li>
-                            <li>Okruh doručení: 50 km</li>
-                            <li>Standardní holub</li>
+                            <li class="pricing-feature-1-1">Zásilky do 70 g</li>
+                            <li class="pricing-feature-1-2">Doručení do 7 hodin</li>
+                            <li class="pricing-feature-1-3">Sledování zásilky</li>
+                            <li class="pricing-feature-1-4">Okruh doručení: 50 km</li>
+                            <li class="pricing-feature-1-5">Standardní holub</li>
                         </ul>
-                        <a href="#contact" class="btn">Vybrat balíček</a>
+                        <a href="#contact" class="btn pricing-btn-1">Vybrat balíček</a>
                     </div>
                 </div>
                 <div class="pricing-card">
                     <div class="pricing-header">
-                        <h3>Premium</h3>
-                        <div class="price">349 Kč <span>/ zásilka</span></div>
+                        <h3 class="pricing-plan-2">Premium</h3>
+                        <div class="price"><span class="pricing-amount-2">349 Kč</span> <span class="pricing-period-2">/ zásilka</span></div>
                     </div>
                     <div class="pricing-features">
                         <ul>
-                            <li>Zásilky do 100 g</li>
-                            <li>Express doručení do 4 hodin</li>
-                            <li>GPS sledování v reálném čase</li>
-                            <li>Okruh doručení: 70 km</li>
-                            <li>Elitní holub s kamerou</li>
+                            <li class="pricing-feature-2-1">Zásilky do 100 g</li>
+                            <li class="pricing-feature-2-2">Express doručení do 4 hodin</li>
+                            <li class="pricing-feature-2-3">GPS sledování v reálném čase</li>
+                            <li class="pricing-feature-2-4">Okruh doručení: 70 km</li>
+                            <li class="pricing-feature-2-5">Elitní holub s kamerou</li>
                         </ul>
-                        <a href="#contact" class="btn">Vybrat balíček</a>
+                        <a href="#contact" class="btn pricing-btn-2">Vybrat balíček</a>
                     </div>
                 </div>
                 <div class="pricing-card">
                     <div class="pricing-header">
-                        <h3>Business</h3>
-                        <div class="price">3899 Kč <span>/ měsíc</span></div>
+                        <h3 class="pricing-plan-3">Business</h3>
+                        <div class="price"><span class="pricing-amount-3">3899 Kč</span> <span class="pricing-period-3">/ měsíc</span></div>
                     </div>
                     <div class="pricing-features">
                         <ul>
-                            <li>Neomezené zásilky do 100 g</li>
-                            <li>Prioritní doručení</li>
-                            <li>Vlastní holub k dispozici</li>
-                            <li>Okruh doručení: 70 km</li>
-                            <li>Prémiová holubí výbava</li>
+                            <li class="pricing-feature-3-1">Neomezené zásilky do 100 g</li>
+                            <li class="pricing-feature-3-2">Prioritní doručení</li>
+                            <li class="pricing-feature-3-3">Vlastní holub k dispozici</li>
+                            <li class="pricing-feature-3-4">Okruh doručení: 70 km</li>
+                            <li class="pricing-feature-3-5">Prémiová holubí výbava</li>
                         </ul>
-                        <a href="#contact" class="btn">Vybrat balíček</a>
+                        <a href="#contact" class="btn pricing-btn-3">Vybrat balíček</a>
                     </div>
                 </div>
                 <div class="pricing-card" style="position: relative;">
-                    <div class="ribbon"><span>NOVINKA</span></div>
+                    <div class="ribbon"><span class="ribbon-text">NOVINKA</span></div>
                     <div class="pricing-header" style="background-color: #d63031;">
-                        <h3>Heavy Wing</h3>
-                        <div class="price">1659 Kč <span>/ zásilka</span></div>
+                        <h3 class="pricing-plan-4">Heavy Wing</h3>
+                        <div class="price"><span class="pricing-amount-4">1659 Kč</span> <span class="pricing-period-4">/ zásilka</span></div>
                     </div>
                     <div class="pricing-features">
                         <ul>
-                            <li><strong>Extra těžké zásilky do 1 kg!</strong></li>
-                            <li>Doručení do 4 hodin</li>
-                            <li>Tým špičkových holubích atletů</li>
-                            <li>Okruh doručení: 60 km</li>
-                            <li>Speciální záchranný tým v pohotovosti</li>
+                            <li class="pricing-feature-4-1"><strong>Extra těžké zásilky do 1 kg!</strong></li>
+                            <li class="pricing-feature-4-2">Doručení do 4 hodin</li>
+                            <li class="pricing-feature-4-3">Tým špičkových holubích atletů</li>
+                            <li class="pricing-feature-4-4">Okruh doručení: 60 km</li>
+                            <li class="pricing-feature-4-5">Speciální záchranný tým v pohotovosti</li>
                         </ul>
-                        <a href="#contact" class="btn" style="background-color: #d63031;">Vybrat balíček</a>
+                        <a href="#contact" class="btn pricing-btn-4" style="background-color: #d63031;">Vybrat balíček</a>
                     </div>
                 </div>
             </div>
@@ -1006,13 +295,13 @@
     <section class="section faq">
         <div class="container">
             <div class="section-title">
-                <h2>Časté otázky</h2>
+                <h2 class="faq-title">Časté otázky</h2>
             </div>
             <div class="faq-content">
                 <div class="faq-item active">
-                    <div class="faq-question">Jak může holub doručit můj balík?</div>
+                    <div class="faq-question faq-question-1">Jak může holub doručit můj balík?</div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">
+                        <div class="faq-answer-content faq-answer-1">
                             Naši holubi jsou vycvičeni k přepravě lehkých předmětů pomocí speciálně navržených
                             miniaturních batůžků. Každý holub má vrozenou schopnost navigace a je vycvičen k návratu do
                             svého domovského holubníku nebo k určenému cíli.
@@ -1020,9 +309,9 @@
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">Co když prší nebo je špatné počasí?</div>
+                    <div class="faq-question faq-question-2">Co když prší nebo je špatné počasí?</div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">
+                        <div class="faq-answer-content faq-answer-2">
                             Naši holubi jsou vybaveni voděodolnými miniaturními bundičkami pro ochranu při mírné
                             nepřízni počasí. V případě extrémních podmínek nabízíme alternativní doručení nebo
                             kompenzaci.
@@ -1030,9 +319,9 @@
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">Jaké jsou hmotnostní limity pro zásilky?</div>
+                    <div class="faq-question faq-question-3">Jaké jsou hmotnostní limity pro zásilky?</div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">
+                        <div class="faq-answer-content faq-answer-3">
                             Standardní holub zvládne zásilku do 70 g, naši speciálně trénovaní elitní holubi až do 100
                             g. Pro těžší zásilky máme speciální tým "Těžká křídla", který dokáže přepravit zásilky až do
                             1 kg pomocí koordinovaného letu našich nejsilnějších holubů.
@@ -1040,9 +329,9 @@
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">Jak můžete doručit 1kg balík pomocí holubů?</div>
+                    <div class="faq-question faq-question-4">Jak můžete doručit 1kg balík pomocí holubů?</div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">
+                        <div class="faq-answer-content faq-answer-4">
                             Náš patentovaný systém "Multi-Wing" využívá tým 5-8 speciálně trénovaných holubů, kteří
                             spolupracují na přepravě těžkého balíčku. Používáme speciální ultralehký postroj, který
                             rozdělí váhu rovnoměrně mezi všechny členy týmu. Tento inovativní systém byl vyvinut ve
@@ -1051,9 +340,9 @@
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">Je doručení holubem opravdu spolehlivé?</div>
+                    <div class="faq-question faq-question-5">Je doručení holubem opravdu spolehlivé?</div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">
+                        <div class="faq-answer-content faq-answer-5">
                             Holubi mají přirozenou schopnost navigace a naše úspěšnost doručení je 99,5%. Pro srovnání,
                             běžné kurýrní služby dosahují úspěšnosti okolo 95%. Každý holub je vybaven GPS trackerem,
                             takže vždy víme, kde se vaše zásilka nachází.
@@ -1061,9 +350,9 @@
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">Co když holuba napadne dravec?</div>
+                    <div class="faq-question faq-question-6">Co když holuba napadne dravec?</div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">
+                        <div class="faq-answer-content faq-answer-6">
                             Všechny zásilky jsou pojištěny proti ztrátě a poškození. Naši holubi jsou navíc vybaveni
                             mikro-alarmem, který odrazuje potenciální predátory a signalizuje naší záchranné jednotce
                             potřebu pomoci.
@@ -1077,62 +366,62 @@
     <section id="contact" class="section">
         <div class="container">
             <div class="section-title">
-                <h2>Kontaktujte nás</h2>
+                <h2 class="contact-title">Kontaktujte nás</h2>
             </div>
             <div class="contact-content">
                 <div class="contact-info">
-                    <h3>Informace</h3>
+                    <h3 class="contact-info-title">Informace</h3>
                     <div class="info-item">
                         <i>📍</i>
                         <div>
-                            <strong>Adresa:</strong>
-                            <p>Holubí náměstí 123, 110 00 Praha 1</p>
+                            <strong class="contact-address-label">Adresa:</strong>
+                            <p class="contact-address">Holubí náměstí 123, 110 00 Praha 1</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <i>📱</i>
                         <div>
-                            <strong>Telefon:</strong>
-                            <p>+420 777 888 999</p>
+                            <strong class="contact-phone-label">Telefon:</strong>
+                            <p class="contact-phone">+420 777 888 999</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <i>✉️</i>
                         <div>
-                            <strong>Email:</strong>
+                            <strong class="contact-email-label">Email:</strong>
                             <p>info@speedwing.cz</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <i>🕒</i>
                         <div>
-                            <strong>Provozní doba:</strong>
-                            <p>Pondělí - Pátek: 7:00 - 20:00</p>
-                            <p>Sobota - Neděle: 10:00 - 14:00</p>
+                            <strong class="contact-hours-label">Provozní doba:</strong>
+                            <p class="contact-hours-weekdays">Pondělí - Pátek: 7:00 - 20:00</p>
+                            <p class="contact-hours-weekend">Sobota - Neděle: 10:00 - 14:00</p>
                         </div>
                     </div>
                     <img src="./img/contact.jpg" alt="Kontakt" class="contact-image">
                 </div>
                 <div class="contact-form">
-                    <h3>Napište nám</h3>
+                    <h3 class="contact-form-title">Napište nám</h3>
                     <form action="https://formspree.io/f/xpwjoljb" method="POST">
                         <div class="form-group">
-                            <label for="name">Jméno</label>
+                            <label for="name" class="form-label-name">Jméno</label>
                             <input type="text" id="name" name="name" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email" class="form-label-email">Email</label>
                             <input type="email" id="email" name="email" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label for="subject">Předmět</label>
+                            <label for="subject" class="form-label-subject">Předmět</label>
                             <input type="text" id="subject" name="subject" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label for="message">Zpráva</label>
+                            <label for="message" class="form-label-message">Zpráva</label>
                             <textarea id="message" name="message" class="form-control" required></textarea>
                         </div>
-                        <button type="submit" class="btn">Odeslat zprávu</button>
+                        <button type="submit" class="btn form-submit">Odeslat zprávu</button>
                     </form>
                 </div>
             </div>
@@ -1144,7 +433,7 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>SpeedWing</h3>
-                    <p>Revoluční doručovací služba, která spojuje tradici s moderními technologiemi pro maximální
+                    <p class="footer-description">Revoluční doručovací služba, která spojuje tradici s moderními technologiemi pro maximální
                         rychlost a spolehlivost.</p>
                     <div class="social-links">
                         <a href="#" aria-label="Facebook">f</a>
@@ -1154,108 +443,44 @@
                     </div>
                 </div>
                 <div class="footer-column">
-                    <h3>Služby</h3>
+                    <h3 class="footer-services-title">Služby</h3>
                     <ul>
-                        <li><a href="#services">Expresní doručení</a></li>
-                        <li><a href="#services">Balíky do 100 g</a></li>
-                        <li><a href="#services">Osobní holub</a></li>
-                        <li><a href="#services">Extra těžké balíky (1 kg)</a></li>
-                        <li><a href="#services">Firemní řešení</a></li>
+                        <li><a href="#services" class="footer-service-1">Expresní doručení</a></li>
+                        <li><a href="#services" class="footer-service-2">Balíky do 100 g</a></li>
+                        <li><a href="#services" class="footer-service-3">Osobní holub</a></li>
+                        <li><a href="#services" class="footer-service-4">Extra těžké balíky (1 kg)</a></li>
+                        <li><a href="#services" class="footer-service-5">Firemní řešení</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <h3>Užitečné odkazy</h3>
+                    <h3 class="footer-links-title">Užitečné odkazy</h3>
                     <ul>
-                        <li><a href="#about">O nás</a></li>
-                        <li><a href="#pricing">Ceník</a></li>
-                        <li><a href="#">Obchodní podmínky</a></li>
-                        <li><a href="#">Ochrana soukromí</a></li>
+                        <li><a href="#about" class="footer-link-1">O nás</a></li>
+                        <li><a href="#pricing" class="footer-link-2">Ceník</a></li>
+                        <li><a href="#" class="footer-link-3">Obchodní podmínky</a></li>
+                        <li><a href="#" class="footer-link-4">Ochrana soukromí</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <h3>Newsletter</h3>
-                    <p>Přihlaste se k odběru novinek a získejte slevu 10% na první zásilku.</p>
+                    <h3 class="footer-newsletter-title">Newsletter</h3>
+                    <p class="footer-newsletter-text">Přihlaste se k odběru novinek a získejte slevu 10% na první zásilku.</p>
                     <form>
                         <div class="form-group">
                             <input type="email" class="form-control" placeholder="Váš email">
                         </div>
-                        <button type="submit" class="btn">Přihlásit se</button>
+                        <button type="submit" class="btn newsletter-submit">Přihlásit se</button>
                     </form>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 SpeedWing - Holubí pošta. Všechna práva vyhrazena.</p>
+                <p class="footer-copyright">&copy; 2025 SpeedWing - Holubí pošta. Všechna práva vyhrazena.</p>
             </div>
         </div>
     </footer>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        // FAQ Accordion
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const item = question.parentElement;
-                item.classList.toggle('active');
-            });
-        });
-
-        // Smooth scrolling for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                const target = document.querySelector(this.getAttribute('href'));
-
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 90,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // MAPA
-        var map = L.map('delivery-map').setView([49.8, 15.5], 7); // CZ střed
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 11,
-            minZoom: 6,
-            attribution: ''
-        }).addTo(map);
-
-        // Hlavní města a kruhy
-        var cities = [
-            { name: "Praha",      lat:50.0755, lon:14.4378, color:"#ff6b35", radius:70000 },
-            { name: "Brno",       lat:49.1951, lon:16.6068, color:"#3a5798", radius:70000 },
-            { name: "Ostrava",    lat:49.8209, lon:18.2625, color:"#3a5798", radius:70000 },
-            { name: "Plzeň",      lat:49.7475, lon:13.3776, color:"#3a5798", radius:70000 },
-            { name: "Ústí n.L.",  lat:50.6607, lon:14.0323, color:"#3a5798", radius:70000 },
-            { name: "Liberec",    lat:50.7671, lon:15.0562, color:"#3a5798", radius:70000 },
-            { name: "Hradec Kr.", lat:50.2092, lon:15.8328, color:"#3a5798", radius:70000 },
-            { name: "Pardubice",  lat:50.0343, lon:15.7812, color:"#3a5798", radius:70000 },
-            { name: "Jihlava",    lat:49.3961, lon:15.5912, color:"#3a5798", radius:70000 },
-            { name: "Olomouc",    lat:49.5938, lon:17.2509, color:"#3a5798", radius:70000 },
-            { name: "Zlín",       lat:49.2264, lon:17.6706, color:"#3a5798", radius:70000 },
-            { name: "Karlovy V.", lat:50.2317, lon:12.8710, color:"#3a5798", radius:70000 },
-            { name: "Č. Buděj.",  lat:48.9747, lon:14.4744, color:"#3a5798", radius:70000 },
-        ];
-        cities.forEach(function(city){
-            L.circle([city.lat, city.lon], {
-                color: city.color,
-                opacity: 0.3,
-                fillColor: city.color + "33",
-                fillOpacity: 0.9,
-                radius: city.radius
-            }).addTo(map);
-            L.circleMarker([city.lat, city.lon], {
-                color: "#fff",
-                fillColor: city.color,
-                fillOpacity: 1,
-                radius: 10,
-                weight: 3
-            }).bindTooltip(city.name, {permanent:true, direction:"top", className:"city-label"}).addTo(map);
-        });
-    </script>
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
