@@ -30,6 +30,30 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Collapsible menu
+document.addEventListener("DOMContentLoaded", function () {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navList = document.querySelector('.nav-list');
+
+    menuToggle.addEventListener('click', function () {
+        navList.classList.toggle('open');
+    });
+
+    // Zavře menu po kliknutí na odkaz nebo jazyk
+    navList.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('click', () => {
+            navList.classList.remove('open');
+        });
+    });
+
+    // Zavře menu při změně velikosti okna na větší
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) {
+            navList.classList.remove('open');
+        }
+    });
+});
+
 // Funkce pro inicializaci jazyka
 function initializeLanguage() {
     // Zkontrolovat, jestli je uložena preference jazyka

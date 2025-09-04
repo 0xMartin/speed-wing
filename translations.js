@@ -168,7 +168,7 @@ const translations = {
         'navContact': 'Contact',
         
         // Hero section
-        'heroTitle': 'Fastest Delivery by Pigeon Wing',
+        'heroTitle': 'Fastest Delivery by Air',
         'heroText': 'Traditional values with a modern approach. Speed, reliability and eco-friendly delivery in one wing.',
         'heroBtn': 'Order Delivery',
         
